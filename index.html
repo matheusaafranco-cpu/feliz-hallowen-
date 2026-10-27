@@ -68,6 +68,7 @@
             border: 1px solid #ff6600;
         }
 
+        /* Janela secreta do susto */
         .tela-susto {
             display: none;
             position: fixed;
@@ -87,6 +88,7 @@
             object-fit: cover;
         }
 
+        /* Efeito piscante agressivo */
         .piscar-alerta {
             animation: flashEstourado 0.08s infinite alternate;
         }
@@ -107,13 +109,13 @@
         </div>
     </div>
 
-    <!-- GIF de susto usando link estável hospedado publicamente -->
+    <!-- Puxa a sua imagem local do Jeff -->
     <div id="janelaSusto" class="tela-susto">
-        <img id="imagemSusto" src="https://githubusercontent.com" alt="BOO!">
+        <img id="imagemSusto" src="susto.jpg" alt="BOO!">
     </div>
 
-    <!-- Link direto .mp3 estável para o áudio de grito estourado -->
-    <audio id="somSusto" src="https://githubusercontent.com" preload="auto"></audio>
+    <!-- Puxa o seu áudio local estourado -->
+    <audio id="somSusto" src="grito.mp3" preload="auto"></audio>
 
     <script>
         const btnNao = document.getElementById('btnNao');
@@ -135,7 +137,7 @@
         function iniciarSuspense() {
             conteudoPrincipal.style.display = 'none';
             document.body.style.backgroundColor = 'black';
-            setTimeout(dispararSusto, 3000); 
+            setTimeout(dispararSusto, 3000); // 3 segundos de suspense
         }
 
         function dispararSusto() {
@@ -143,9 +145,9 @@
             janelaSusto.classList.add('piscar-alerta');
             
             somSusto.volume = 1.0; 
-            somSusto.play().catch(e => console.log("Áudio bloqueado ou erro de carregamento:", e));
+            somSusto.play().catch(e => console.log("O navegador exigiu clique prévio:", e));
 
-            setTimeout(voltarTelaAnterior, 4000);
+            setTimeout(voltarTelaAnterior, 4000); // Exibe o susto por 4 segundos
         }
 
         function voltarTelaAnterior() {
