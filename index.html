@@ -68,7 +68,6 @@
             border: 1px solid #ff6600;
         }
 
-        /* Classe secreta do susto */
         .tela-susto {
             display: none;
             position: fixed;
@@ -88,7 +87,6 @@
             object-fit: cover;
         }
 
-        /* Efeito piscante agressivo */
         .piscar-alerta {
             animation: flashEstourado 0.08s infinite alternate;
         }
@@ -109,13 +107,13 @@
         </div>
     </div>
 
-    <!-- Div do susto com GIF real e direto do Giphy -->
+    <!-- GIF de susto usando link estável hospedado publicamente -->
     <div id="janelaSusto" class="tela-susto">
-        <img id="imagemSusto" src="https://giphy.com" alt="BOO!">
+        <img id="imagemSusto" src="https://githubusercontent.com" alt="BOO!">
     </div>
 
-    <!-- Áudio de grito real e direto (.mp3) -->
-    <audio id="somSusto" src="https://soundjay.com" preload="auto"></audio>
+    <!-- Link direto .mp3 estável para o áudio de grito estourado -->
+    <audio id="somSusto" src="https://githubusercontent.com" preload="auto"></audio>
 
     <script>
         const btnNao = document.getElementById('btnNao');
@@ -129,7 +127,6 @@
             const novoX = Math.floor(Math.random() * larguraJanela);
             const novoY = Math.floor(Math.random() * alturaJanela);
 
-            // Torna a posição fixa para ele poder navegar livremente pela tela inteira
             btnNao.style.position = 'fixed';
             btnNao.style.left = novoX + 'px';
             btnNao.style.top = novoY + 'px';
@@ -146,27 +143,21 @@
             janelaSusto.classList.add('piscar-alerta');
             
             somSusto.volume = 1.0; 
-            somSusto.play().catch(e => console.log("O navegador bloqueou o som automático."));
+            somSusto.play().catch(e => console.log("Áudio bloqueado ou erro de carregamento:", e));
 
-            // Fica 4 segundos no susto e depois reconstrói a tela original
             setTimeout(voltarTelaAnterior, 4000);
         }
 
-        // Reseta o site trazendo os dois botões de volta para os seus lugares padrão
         function voltarTelaAnterior() {
-            // Esconde a janela do susto e tira o efeito vermelho piscante
             janelaSusto.style.display = 'none';
             janelaSusto.classList.remove('piscar-alerta');
             
-            // Pausa o som do grito e joga o áudio de volta pro segundo zero
             somSusto.pause();
             somSusto.currentTime = 0; 
 
-            // Devolve o fundo cinza clássico e reexibe o container
             document.body.style.backgroundColor = '#111';
             conteudoPrincipal.style.display = 'block';
 
-            // REMOVE a posição fixa de fuga do botão "Não" para ele voltar a ficar lado a lado com o "Sim"
             btnNao.style.position = 'static';
             btnNao.style.left = 'auto';
             btnNao.style.top = 'auto';
