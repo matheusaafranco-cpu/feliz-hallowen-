@@ -40,9 +40,10 @@
         .botoes {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 20px;
             margin-top: 20px;
-            height: 50px;
+            height: 60px;
             position: relative;
         }
 
@@ -53,6 +54,7 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         #btnSim {
@@ -64,7 +66,6 @@
             background-color: #333;
             color: #ff6600;
             border: 1px solid #ff6600;
-            position: absolute;
         }
 
         /* Classe secreta do susto */
@@ -93,8 +94,8 @@
         }
 
         @keyframes flashEstourado {
-            0% { background-color: #ff0000; }     /* Vermelho puro */
-            100% { background-color: #000000; }   /* Preto total */
+            0% { background-color: #ff0000; }
+            100% { background-color: #000000; }
         }
     </style>
 </head>
@@ -104,16 +105,16 @@
         <h1 id="pergunta">¿Quer comemorar o hallowen comigo ? 🎃</h1>
         <div class="botoes">
             <button id="btnSim" onclick="iniciarSuspense()">Sim:)</button>
-            <button id="btnNao" onmouseover="fuga()" onclick="fuga()">Não:(</button>
+            <button id="btnNao" onmouseover="fuga()" ontouchstart="fuga()" onclick="fuga()">Não:(</button>
         </div>
     </div>
 
-    <!-- Div do susto -->
+    <!-- Div do susto com GIF real e direto do Giphy -->
     <div id="janelaSusto" class="tela-susto">
         <img id="imagemSusto" src="https://giphy.com" alt="BOO!">
     </div>
 
-    <!-- Áudio de grito real e estourado -->
+    <!-- Áudio de grito real e direto (.mp3) -->
     <audio id="somSusto" src="https://soundjay.com" preload="auto"></audio>
 
     <script>
@@ -123,51 +124,50 @@
         const somSusto = document.getElementById('somSusto');
 
         function fuga() {
-            const larguraJanela = window.innerWidth - 100;
-            const alturaJanela = window.innerHeight - 50;
+            const larguraJanela = window.innerWidth - 120;
+            const alturaJanela = window.innerHeight - 60;
             const novoX = Math.floor(Math.random() * larguraJanela);
             const novoY = Math.floor(Math.random() * alturaJanela);
 
+            // Torna a posição fixa para ele poder navegar livremente pela tela inteira
             btnNao.style.position = 'fixed';
             btnNao.style.left = novoX + 'px';
             btnNao.style.top = novoY + 'px';
         }
 
-        // 1ª FASE: Suspense silencioso
         function iniciarSuspense() {
             conteudoPrincipal.style.display = 'none';
             document.body.style.backgroundColor = 'black';
             setTimeout(dispararSusto, 3000); 
         }
 
-        // 2ª FASE: O susto com o efeito piscante ativado
         function dispararSusto() {
             janelaSusto.style.display = 'flex';
-            
-            // Adiciona a animação de piscar na tela inteira do susto
             janelaSusto.classList.add('piscar-alerta');
             
             somSusto.volume = 1.0; 
             somSusto.play().catch(e => console.log("O navegador bloqueou o som automático."));
 
-            // Mantém o caos por 4 segundos e reseta para a tela inicial
+            // Fica 4 segundos no susto e depois reconstrói a tela original
             setTimeout(voltarTelaAnterior, 4000);
         }
 
-        // Restaura o jogo para o estado inicial
+        // Reseta o site trazendo os dois botões de volta para os seus lugares padrão
         function voltarTelaAnterior() {
+            // Esconde a janela do susto e tira o efeito vermelho piscante
             janelaSusto.style.display = 'none';
-            
-            // Remove o efeito piscante para a tela inicial não ficar bugada
             janelaSusto.classList.remove('piscar-alerta');
             
+            // Pausa o som do grito e joga o áudio de volta pro segundo zero
             somSusto.pause();
             somSusto.currentTime = 0; 
 
+            // Devolve o fundo cinza clássico e reexibe o container
             document.body.style.backgroundColor = '#111';
             conteudoPrincipal.style.display = 'block';
 
-            btnNao.style.position = 'absolute';
+            // REMOVE a posição fixa de fuga do botão "Não" para ele voltar a ficar lado a lado com o "Sim"
+            btnNao.style.position = 'static';
             btnNao.style.left = 'auto';
             btnNao.style.top = 'auto';
         }
@@ -175,4 +175,3 @@
 
 </body>
 </html>
-
